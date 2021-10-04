@@ -13,6 +13,9 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
 }
 header {
     display: flex;
@@ -26,6 +29,11 @@ header {
     justify-content: center;
     text-align: center;
     font-size: 2em;
+    flex-direction:row
+}
+.incorrect {
+    
+    
 }
 .quiz-text {
  width: 50%;
@@ -61,3 +69,11 @@ header {
     background-color: var(--hoverBlue);
 }
 
+.incorrect {
+    color: gray;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid gray;
+    width: 30%;
+    margin: auto auto;
+}
