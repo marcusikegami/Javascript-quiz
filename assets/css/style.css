@@ -31,10 +31,10 @@ header {
     font-size: 2em;
     flex-direction:row
 }
-.incorrect {
+/* .incorrect {
     
     
-}
+} */
 .quiz-text {
  width: 50%;
  
