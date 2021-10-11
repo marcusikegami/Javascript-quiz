@@ -7,21 +7,21 @@ const responseElement = document.getElementById('response-buttons');
 const highScoresElement = document.getElementById('high-scores');
 const leaderboardElement = document.getElementById('leaderboard');
 
-let startingTime = 60;
-const timeLeft = document.getElementById('time-left');
+let timeLeft = 60;
+const timeDisplay = document.getElementById('time-left');
 
-function timer() {
-    setInterval(updateTimer, 1000);
     function updateTimer() {
-        timeLeft.innerHTML = startingTime;
+        timeDisplay.innerHTML = timeLeft;
 
-      startingTime --;
-      if (startingTime <= 0) {
-          startingTime = 0;
-      }  
-    }
+      timeLeft --;
+      if (timeLeft <= 0) {
+          timeLeft = 0;
+      } 
+    };
+      
+
     
-}
+
 
 
 let shuffledQuestions, currentQuestionIndex;
@@ -66,20 +66,18 @@ function startQuiz() {
     questionDiv.style.display = 'flex';
     shuffledQuestions = quizQuestions.sort(() => Math.random() - 0.5)
     currentQuestionIndex = 0
+    
     nextQuestion()
-    timer()
-
 
 };
 // my use of this function is based off Web Dev Simplified's open-source code for creating a quiz using Javascript from https://github.com/WebDevSimplified/JavaScript-Quiz-App
 function nextQuestion() {
+    var scoreTimer = setInterval(updateTimer, 1000);
     const highScoresElement = document.getElementById('high-scores');
     if (currentQuestionIndex > quizQuestions.length -1) {
-        questionElement.style.display = 'none';
-        questionDiv.style.display = 'none';
-        highScoresElement.style.display = 'block';
-        leaderboardElement.style.display = 'block';
-
+        
+        showLeaderboard()
+        clearInterval(scoreTimer);
     }
     
     else {
@@ -97,6 +95,7 @@ function displayQuestion(quizQuestions) {
         if (answers.isTrue) {
             button.dataset.isTrue = answers.isTrue
         }
+
         button.addEventListener('click', selectAnswer) 
             responseElement.appendChild(button)
         
@@ -114,9 +113,25 @@ function resetState() {
    nextQuestion(currentQuestionIndex[currentQuestionIndex++])
 };
 
-function selectAnswer(event) {
+function selectAnswer(button) {
     resetState()
+    if (!button.isTrue) {
+        timeLeft -= 10;
+    }
 
+}
+function showLeaderboard() {
+        questionElement.style.display = 'none';
+        questionDiv.style.display = 'none';
+        highScoresElement.style.display = 'block';
+        leaderboardElement.style.display = 'block';
+}
+
+var users = [];
+
+
+function saveScore() {
+    var score = timeLeft;
 }
 
 
