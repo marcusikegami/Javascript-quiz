@@ -2,10 +2,12 @@ const startButton = document.getElementById('start-button');
 const quizBox = document.querySelector('quiz-wrapper');
 const startScreen = document.getElementById('start-screen');
 let questionDiv = $('.question-text');
-// const INCORRECT =
+const questionElement = document.getElementById('question');
+const responseElement = document.getElementById('response-buttons');
+let shuffledQuestions, currentQuestionIndex;
 
-// const currentQuestion
-quizQuestions = [
+startButton.addEventListener('click', startQuiz);
+var quizQuestions = [
     {
         question: "What is the correct way to write a comment in Javascript?",
         answers: [
@@ -38,52 +40,82 @@ quizQuestions = [
       
   ];
 
-document.querySelectorAll('.response').forEach(item => {
-    item.addEventListener('click', event => {
-        //handles click
-
-        // this will deduct time from the timer if user answers incorrectly
-        if (item.getAttribute('data-correct') === 'false') {
-            console.log('false')
-
-        } else {
-            const INCORRECT = document.querySelector('.body')
-            const incorrectElement = document.createElement('div')
-            incorrectElement.setAttribute('class', 'incorrect')
-            incorrectElement.textContent ='INCORRECT'
-            INCORRECT.appendChild(incorrectElement)
-        }
-        
-})
-
-
-});
-
-
-function nextQuestion() {
-    for (i = 0; i < questions.length; i++) {
-        var question = $('<h1>')
-        .addClass('response')
-        .text(questions.question[i]);
-
-        questionDiv.appendChild(question);
-    }
-}
-
-startButton.addEventListener('click', startQuiz);
-
-
-
 // startQuiz will begin by hiding the start-screen and iterating through the quiz questions array every time a question is answered
 function startQuiz() {
    startScreen.style.display = 'none';
     questionDiv.removeClass('d-none');
+    shuffledQuestions = quizQuestions.sort(() => Math.random() - 0.5)
+    currentQuestionIndex = 0
+    nextQuestion()
 
 
 };
+// my use of this function is based off Web Dev Simplified's open-source code for creating a quiz using Javascript from https://github.com/WebDevSimplified/JavaScript-Quiz-App
+function nextQuestion() {
+    if (currentQuestionIndex > quizQuestions.length -1) {
+        questionElement.style.display = 'none';
+    }
+    
+    else {
+    displayQuestion(shuffledQuestions[currentQuestionIndex])
+    }
+};
+
+function displayQuestion(quizQuestions) {
+    questionElement.innerText = quizQuestions.question
+    quizQuestions.answers.forEach(answers => {
+        const button = document.createElement('span')
+        button.innerText = answers.text
+        button.classList.add('response')
+
+        if (answers.isTrue) {
+            button.dataset.isTrue = answers.isTrue
+        }
+        button.addEventListener('click', selectAnswer) 
+            responseElement.appendChild(button)
+        
+    });
+    
+};
+
+
+
+function resetState() {
+    
+   while ( responseElement.firstChild) {
+    responseElement.removeChild(responseElement.firstChild)
+   };
+   nextQuestion(currentQuestionIndex[currentQuestionIndex++])
+};
+
+function selectAnswer(event) {
+    resetState()
+
+}
+
+
 // this function needs to log the user's answer and determine if it is incorrect/correct, show the next question, and adjust the timer accordingly
 
 // function questionResponseStorage() {
 //     console.log(responseButton.getAttribute('id'))
     
+
+// document.querySelectorAll('.response').forEach(item => {
+//     item.addEventListener('click', event => {
+//         //handles click
+
+//         // this will deduct time from the timer if user answers incorrectly
+//         if (item.getAttribute('data-correct') === 'false') {
+//             console.log('false')
+
+//         } else {
+//             const INCORRECT = document.querySelector('.body')
+//             const incorrectElement = document.createElement('div')
+//             incorrectElement.setAttribute('class', 'incorrect')
+//             incorrectElement.textContent ='INCORRECT'
+//             INCORRECT.appendChild(incorrectElement)
+//         }
+        
+// })
+
 
