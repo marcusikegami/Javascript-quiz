@@ -14,10 +14,10 @@
  </head>
  <body class='body'>
      <header>
-        <div class="high-scores">
+        <div class="view-high-scores" id="high-scores-btn">
             View high scores
         </div>
-        <div class="timer">Time:</div>
+        <div class="timer">Time:  <span id="time-left"> </span></div>
      </header>
      <article class="quiz-wrapper">
         <div class="quiz-text" id="start-screen">
@@ -25,21 +25,30 @@
             <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
             <button class="btn" id="start-button">Start Quiz</button>
         </div>
-        <div class="question-text d-none">
+        <div class="question-text" id="question-text">
             <div class="question" id="question">Lorem ipsum dolor sit amet consectetur adipisicing elit.  </div>
             <div id="response-buttons">
                 
             </div>
+            </div>
         </div>
-        <div class="high-scores">
+        <div class="high-scores" id="high-scores">
             <h1>Good work!</h1>
             <div class="score-div">
                 <p>Enter initials:</p>
                 <input type="text" class="text-input">
                 <button class="submit-button">Submit</button>
+                
             </div>
         </div>
+            
      </article>
+     <div class="leaderboard" id="leaderboard">
+         <h1>Leaderboard</h1>
+         <div id="leaderboard-users">
+             <span class="users">MHI</span>
+        </div>
+     
      <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
  </body>
  </html>

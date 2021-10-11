@@ -1,9 +1,29 @@
 const startButton = document.getElementById('start-button');
 const quizBox = document.querySelector('quiz-wrapper');
 const startScreen = document.getElementById('start-screen');
-let questionDiv = $('.question-text');
+const questionDiv = document.getElementById('question-text');
 const questionElement = document.getElementById('question');
 const responseElement = document.getElementById('response-buttons');
+const highScoresElement = document.getElementById('high-scores');
+const leaderboardElement = document.getElementById('leaderboard');
+
+let startingTime = 60;
+const timeLeft = document.getElementById('time-left');
+
+function timer() {
+    setInterval(updateTimer, 1000);
+    function updateTimer() {
+        timeLeft.innerHTML = startingTime;
+
+      startingTime --;
+      if (startingTime <= 0) {
+          startingTime = 0;
+      }  
+    }
+    
+}
+
+
 let shuffledQuestions, currentQuestionIndex;
 
 startButton.addEventListener('click', startQuiz);
@@ -43,17 +63,23 @@ var quizQuestions = [
 // startQuiz will begin by hiding the start-screen and iterating through the quiz questions array every time a question is answered
 function startQuiz() {
    startScreen.style.display = 'none';
-    questionDiv.removeClass('d-none');
+    questionDiv.style.display = 'flex';
     shuffledQuestions = quizQuestions.sort(() => Math.random() - 0.5)
     currentQuestionIndex = 0
     nextQuestion()
+    timer()
 
 
 };
 // my use of this function is based off Web Dev Simplified's open-source code for creating a quiz using Javascript from https://github.com/WebDevSimplified/JavaScript-Quiz-App
 function nextQuestion() {
+    const highScoresElement = document.getElementById('high-scores');
     if (currentQuestionIndex > quizQuestions.length -1) {
         questionElement.style.display = 'none';
+        questionDiv.style.display = 'none';
+        highScoresElement.style.display = 'block';
+        leaderboardElement.style.display = 'block';
+
     }
     
     else {
@@ -92,30 +118,5 @@ function selectAnswer(event) {
     resetState()
 
 }
-
-
-// this function needs to log the user's answer and determine if it is incorrect/correct, show the next question, and adjust the timer accordingly
-
-// function questionResponseStorage() {
-//     console.log(responseButton.getAttribute('id'))
-    
-
-// document.querySelectorAll('.response').forEach(item => {
-//     item.addEventListener('click', event => {
-//         //handles click
-
-//         // this will deduct time from the timer if user answers incorrectly
-//         if (item.getAttribute('data-correct') === 'false') {
-//             console.log('false')
-
-//         } else {
-//             const INCORRECT = document.querySelector('.body')
-//             const incorrectElement = document.createElement('div')
-//             incorrectElement.setAttribute('class', 'incorrect')
-//             incorrectElement.textContent ='INCORRECT'
-//             INCORRECT.appendChild(incorrectElement)
-//         }
-        
-// })
 
 
